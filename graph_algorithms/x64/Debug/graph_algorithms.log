@@ -1,7 +1,1 @@
-﻿  graph_algorithms.cpp
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_algorithms.cpp(9,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_algorithms.cpp(23,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_algorithms.cpp(82,17): warning C4930: std::vector<int,std::allocator<int>> used_v(void): функция с прототипом не вызвана (предполагалось определение переменной?)
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_algorithms.cpp(97,14): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_algorithms.cpp(85): error C4716: find_su_cycles: должна возвращать значение
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_algorithms.cpp(99): error C4716: find_cycle: должна возвращать значение
+﻿  graph_algorithms.vcxproj -> C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\x64\Debug\graph_algorithms.exe
