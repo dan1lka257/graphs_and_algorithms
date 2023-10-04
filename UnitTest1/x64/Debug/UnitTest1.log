@@ -1,5 +1,4 @@
 ﻿  test.cpp
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(24,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(96,18): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(98): warning C4715: find_cycle: значение возвращается не при всех путях выполнения
+C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(21,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(102): warning C4715: find_cycle: значение возвращается не при всех путях выполнения
   UnitTest1.vcxproj -> C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\x64\Debug\UnitTest1.dll
