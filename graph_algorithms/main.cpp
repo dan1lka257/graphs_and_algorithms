@@ -11,7 +11,7 @@ int main()
             { {4, 't'}, {6, 's'}, {0, 'u'} },
             { {3, 't'}, {5, 's'}, {7, 'u'} },
             { {0, 't'}, {0, 's'}, {6, 'u'} } };
-    find_cycles(graph, 'u', 't');
+    print_dynamical_system_info(graph);
     /*std::cout << "graph\n";
     int n, m;
     cin >> n >> m;

@@ -1,5 +1,5 @@
 /*#pragma once*/
-// Прагму включить тогда, когда здесь будут только прототипы функций, а сами функции будут в отдельном файле
+// Pragma shall be on when there will be prototyps of functions
 
 #include <iostream>
 #include <vector>
@@ -12,7 +12,7 @@ using namespace std;
 const int INF = 1000000000;
 
 void print(vector<int> mas) {
-    // Выводит вектор в консоль
+    // Prints vector into console
     for (int i = 0; i < mas.size(); i++) {
         cout << mas[i] << " ";
     }
@@ -20,7 +20,7 @@ void print(vector<int> mas) {
 }
 
 vector<int> bfs(int s, vector<vector<pair<int, char>>>& graph) {
-    // БФС, ищет расстояние от вершины s до остальных 
+    // BFS which find distance to other verticles
     int n = graph.size();
     vector<int> dist(n, INF);
     dist[s] = 0;
@@ -42,8 +42,8 @@ vector<int> bfs(int s, vector<vector<pair<int, char>>>& graph) {
 }
 
 bool is_3_colored(vector<vector<pair<int, char>>>& graph) {
-    // Проверяет граф на трёхцветность
-    // По одному ребру каждого из 3-х цветов из каждой вершины
+    // Check graph on tricolor
+    // 1 edge of each of 3 colors in one verticle
     for (int i = 0; i < graph.size(); i++) {
         bool color_u = 0, color_s = 0, color_t = 0;
         for (int j = 0; j < graph[i].size(); j++) {
@@ -61,7 +61,7 @@ bool is_3_colored(vector<vector<pair<int, char>>>& graph) {
 }
 
 bool is_connected(vector<vector<pair<int, char>>>& graph) {
-    // Проверяет граф на связность
+    // Check graph is connected or not
     vector<int> dist = bfs(0, graph);
     int max_dist = 0;
     for (int j = 0; j < dist.size(); j++) {
@@ -76,7 +76,7 @@ bool is_connected(vector<vector<pair<int, char>>>& graph) {
 }
 
 vector<int> find_cycle(char color1, char color2, char prev_color, int cur_v, int prev_v, vector<vector<pair<int, char>>>& graph, vector<string>& color, vector<int>& parent) {
-    // Стандартный поиск цикла с учётом его двухцветности
+    // Standard cycle finding taking into account its bicolor
     color[cur_v] = "grey";
     for (int i = 0; i < graph[cur_v].size(); i++) {
         if (graph[cur_v][i].second != prev_color && (graph[cur_v][i].second == color1 || graph[cur_v][i].second == color2)) {
@@ -92,7 +92,7 @@ vector<int> find_cycle(char color1, char color2, char prev_color, int cur_v, int
                         k = j + 1;
                     } else {
                         break;
-                    }            ЭТОТ КОД ДОЛЖЕН СОКРАЩАТЬ ДЕРЕВО ПРЕДКОВ ДО ЦИКЛА НО ОН НЕ НУЖЕН В СИЛУ ПОСТРОЕНИЯ ГРАФА
+                    }            THIS COD MUST DESCREASE PARENT TREE TO CYCLE BUT WE DONT NEED IT BECAUSE OF GRAPH BUILDING
                 }
                 vector<int> cycle(parent.size() - k, 0);
                 for (int i = k; i < parent.size(); i++) {
@@ -108,7 +108,7 @@ vector<int> find_cycle(char color1, char color2, char prev_color, int cur_v, int
 }
 
 vector<vector<int>> find_cycles(vector<vector<pair<int, char>>>& graph, char color1, char color2) {
-    // Ищет двухцветные циклы в графе
+    // Find bicolored cycles in graph
     int n = graph.size();
     vector<int> used_v(n, 0);
     vector<vector<int>> cycles;
@@ -124,14 +124,13 @@ vector<vector<int>> find_cycles(vector<vector<pair<int, char>>>& graph, char col
                 used_v[cycle[j]] = 1;
             }
             cycles.push_back(cycle);
-            print(cycle);
         }
     }
     return cycles;
 }
 
 bool is_acceptable(vector<vector<pair<int, char>>>& graph) {
-    // Длина любого su-цикла равна 4 и граф связен
+    // Lenght of su-cycle is equal 4 and graph is connected
     vector<vector<int>> cycles = find_cycles(graph, 's', 'u');
     bool su_cycle_is_4 = 1;
     for (int i = 0; i < cycles.size(); i++) {
@@ -143,16 +142,15 @@ bool is_acceptable(vector<vector<pair<int, char>>>& graph) {
 }
 
 int count_euler_number(vector<vector<pair<int, char>>>& graph) {
-    // Число Эйлера = tu - su + st
+    // Euler number = tu - su + st
     return find_cycles(graph, 'u', 't').size() - find_cycles(graph, 's', 'u').size() + find_cycles(graph, 's', 't').size();
 }
 
 void print_dynamical_system_info(vector<vector<pair<int, char>>>& graph) {
-    // Выводит общую информацию о динамической системе по графу
-    cout << "Количество источников\t" << find_cycles(graph, 's', 't').size() << "\n";
-    cout << "Количество сёдел\t" << find_cycles(graph, 'u', 's').size() << "\n";
-    cout << "Количество стоков\t" << find_cycles(graph, 'u', 't').size() << "\n";
-    cout << "Число Эйлера\t" << find_cycles(graph, 'u', 't').size() << "\n";
-    // TODO: Ориентируема ли поверхность или нет, тип поверхности
-    // TODO: Написать проверку на ориентируемость
+    // Print dynamical system info
+    cout << "Number of sources\t" << find_cycles(graph, 's', 't').size() << "\n";
+    cout << "Number of saddle\t" << find_cycles(graph, 'u', 's').size() << "\n";
+    cout << "Number of drains\t" << find_cycles(graph, 'u', 't').size() << "\n";
+    cout << "Euler Number\t\t" << count_euler_number(graph) << "\n";
+    // TODO: Surface is oriented or not, type of surface
 }

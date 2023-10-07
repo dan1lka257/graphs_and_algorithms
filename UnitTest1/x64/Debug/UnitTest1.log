@@ -1,4 +1,6 @@
-﻿  test.cpp
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(21,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(102): warning C4715: find_cycle: значение возвращается не при всех путях выполнения
-  UnitTest1.vcxproj -> C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\x64\Debug\UnitTest1.dll
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (UnitTest1.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  pch.cpp
+C:\Users\Danil\Desktop\Graphs and etc\UnitTest1\pch.cpp(1,10): fatal  error C1083: Не удается открыть файл предкомпилированный заголовок: x64\Debug\graph_algorithms_unit_test.pch: No such file or directory,
+  test.cpp
+C:\Users\Danil\Desktop\Graphs and etc\UnitTest1\test.cpp(1,10): fatal  error C1083: Не удается открыть файл предкомпилированный заголовок: x64\Debug\graph_algorithms_unit_test.pch: No such file or directory,
+  Создание кода...
