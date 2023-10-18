@@ -1,0 +1,6 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/Basic3DExample/1201029076_3649831050_223132457.mp4'
+file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/Basic3DExample/569927698_4253145783_2305711604.mp4'
+file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/Basic3DExample/569927698_3009564998_2305711604.mp4'
+file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/Basic3DExample/569927698_1444395866_2305711604.mp4'
+file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/Basic3DExample/569927698_567571361_2305711604.mp4'

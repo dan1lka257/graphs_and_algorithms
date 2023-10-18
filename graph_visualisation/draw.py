@@ -37,7 +37,7 @@ class PointMovingOnShapes(Scene):
 
 class Basic3DExample(ThreeDScene):
     def construct(self):
-        cube = Torus(color='pink')
+        cube = Sphere(color='pink')
 
         self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)
 
@@ -132,3 +132,38 @@ class myjob(ThreeDScene):
             )
         self.stop_ambient_camera_rotation()
         self.wait()
+
+class ParaSurface(ThreeDScene):
+    def func_sphere(self, u, v):
+        radius = 7
+        sphereCentre = np.array([0, 0, 0])
+        return radius * np.array([np.cos(u) * np.sin(v) - sphereCentre[0]/radius,
+                                  np.sin(u) * np.sin(v) - sphereCentre[1]/radius,
+                                  np.cos(v) - sphereCentre[2]/radius])
+
+    def construct(self):
+        rng = 7
+        axes = ThreeDAxes(
+            x_range=[-rng, rng], y_range=[-rng, rng], z_range=[-rng, rng],
+            x_length=rng, y_length=rng, z_length=rng
+            )
+        x_label = axes.get_x_axis_label(Tex("x"))
+        y_label = axes.get_y_axis_label(Tex("y"))
+        z_label = axes.get_z_axis_label(Tex("z"))
+        mainSphere = Surface(
+            lambda u, v: axes.c2p(*self.func_sphere(u, v)),
+            u_range=[0, TAU],
+            v_range=[0, TAU],
+            resolution=32, fill_opacity=0.1, checkerboard_colors=['#29ABCA', '#236B8E'], stroke_color=BLACK, stroke_width=0.1
+        )
+        u_sep = ParametricFunction(
+            lambda u: (0.5 * 7) * np.array([
+                np.cos(u),
+                np.sin(u),
+                0
+            ]), color=RED, t_range = np.array([0, TAU, 0.01])
+        )
+        u_sep.set_z_index(mainSphere.z_index )
+        u_sep.rotate(PI / 4, about_point=[0, 0, 0], axis=RIGHT)
+        self.set_camera_orientation(theta=70*DEGREES, phi=75*DEGREES)
+        self.add(axes, u_sep, mainSphere, x_label, y_label, z_label)
