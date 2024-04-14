@@ -32,6 +32,17 @@ int main()
         cout << endl;
     }
     */
-
+    vector<vector<vector<pair<int, char>>>> graphs = graph_generator(-2, 8);
+    for (int i = 0; i < graphs.size(); i++) {
+        cout << "----------------------\n";
+        for (int j = 0; j < graphs[i].size(); j++) {
+            cout << j << "\t";
+            for (int k = 0; k < graphs[i][j].size(); k++) {
+                cout << graphs[i][j][k].first << " " << graphs[i][j][k].second << "\t";
+            }
+            cout << "\n";
+        }
+        print_dynamical_system_info(graphs[i]);
+    }
     system("pause");
 }

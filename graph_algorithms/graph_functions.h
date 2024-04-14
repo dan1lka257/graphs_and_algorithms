@@ -41,9 +41,12 @@ vector<int> bfs(int s, vector<vector<pair<int, char>>>& graph) {
     return dist;
 }
 
-bool is_3_colored(vector<vector<pair<int, char>>>& graph) {
+bool is_3_colored_and_non_oriented(vector<vector<pair<int, char>>>& graph) {
     // Check graph on tricolor
     // 1 edge of each of 3 colors in one verticle
+
+    // ENTERED GRAPH MUST BE INVOLVED IS SCTRICT REQUIREMENTS
+
     for (int i = 0; i < graph.size(); i++) {
         bool color_u = 0, color_s = 0, color_t = 0;
         for (int j = 0; j < graph[i].size(); j++) {
@@ -51,12 +54,19 @@ bool is_3_colored(vector<vector<pair<int, char>>>& graph) {
             if (graph[i][j].second == 's') color_s += 1;
             if (graph[i][j].second == 't') color_t += 1;
         }
+        bool oriented = 1;
+        for (int j = 0; j < graph[i].size(); j++) {
+            if (graph[i][j].first != graph[graph[i][j].first][j].first) oriented == 0;
+        }
         if (!(color_u == 1 && color_s == 1 && color_t == 1)) {
             cout << "Graph is not 3 colored" << endl;
             return false;
         }
+        if (!(oriented)) {
+            cout << "Graph is not oriented" << endl;
+            return false;
+        }
     }
-    cout << "Graph is 3 colored" << endl;
     return true;
 }
 
@@ -68,10 +78,8 @@ bool is_connected(vector<vector<pair<int, char>>>& graph) {
         max_dist = max(max_dist, dist[j]);
     }
     if (max_dist == INF) {
-        cout << "Graph is not connected" << endl;
         return false;
     }
-    cout << "Graph is connected" << endl;
     return true;
 }
 
@@ -138,7 +146,7 @@ bool is_acceptable(vector<vector<pair<int, char>>>& graph) {
             su_cycle_is_4 = 0;
         }
     }
-    return su_cycle_is_4 && is_connected(graph);
+    return su_cycle_is_4 && is_connected(graph) && is_3_colored_and_non_oriented(graph);
 }
 
 int count_euler_number(vector<vector<pair<int, char>>>& graph) {
@@ -146,11 +154,153 @@ int count_euler_number(vector<vector<pair<int, char>>>& graph) {
     return find_cycles(graph, 'u', 't').size() - find_cycles(graph, 's', 'u').size() + find_cycles(graph, 's', 't').size();
 }
 
+bool is_oriented_surface(vector<vector<pair<int, char>>>& graph) {
+    // Graph is on oriented surface <=> length of all cycles is even
+    bool is_even = true;
+    vector<vector<int>> cycles(0);
+    vector<vector<int>> cycles_ut = find_cycles(graph, 'u', 't');
+    vector<vector<int>> cycles_su = find_cycles(graph, 's', 'u');
+    vector<vector<int>> cycles_st = find_cycles(graph, 's', 't');
+    cycles.insert(cycles.end(), cycles_ut.begin(), cycles_ut.end());
+    cycles.insert(cycles.end(), cycles_su.begin(), cycles_su.end());
+    cycles.insert(cycles.end(), cycles_st.begin(), cycles_st.end());
+    for (int i = 0; i < cycles.size(); i++) {
+        if (cycles[i].size() % 2 != 0) {
+            is_even = false;
+        }
+    }
+    return is_even;
+}
+
 void print_dynamical_system_info(vector<vector<pair<int, char>>>& graph) {
     // Print dynamical system info
-    cout << "Number of sources\t" << find_cycles(graph, 's', 't').size() << "\n";
-    cout << "Number of saddle\t" << find_cycles(graph, 'u', 's').size() << "\n";
-    cout << "Number of drains\t" << find_cycles(graph, 'u', 't').size() << "\n";
+    cout << "Is acceptable graph?\t" << is_acceptable(graph) << "\n";
+    cout << "Is oriented surface?\t" << is_oriented_surface(graph) << "\n";
     cout << "Euler Number\t\t" << count_euler_number(graph) << "\n";
-    // TODO: Surface is oriented or not, type of surface
+    cout << "Number of sources\t" << find_cycles(graph, 's', 't').size() << "\n";
+    cout << "Number of saddles\t" << find_cycles(graph, 'u', 's').size() << "\n";
+    cout << "Number of drains\t" << find_cycles(graph, 'u', 't').size() << "\n";
+    // TODO: isomorphism & python and c++ connection & drawing on sphere
+}
+
+vector<vector<vector<pair<int, char>>>> graph_generator(int euler_number, int saddles) {
+    vector<vector<vector<pair<int, char>>>> graphs(0);
+    // Generating primal graph
+    vector<vector<pair<int, char>>> graph(0);
+    for (int i = 0; i < saddles * 4; i++) {
+        vector<pair<int, char>> neighbours;
+        if (i == 0) { // first verticle
+            neighbours = { {i + 1, 't'}, {i + 2, 's'}, {i + 1, 'u'} };
+        } else if (i == 1) { // second verticle
+            neighbours = { {i - 1, 't'}, {i + 2, 's'}, {i - 1, 'u'} };
+        } else if (i == saddles * 4 - 1) { // last verticle
+            neighbours = { {i - 1, 't'}, {i - 2, 's'}, {i - 1, 'u'} };
+        } else if (i == saddles * 4 - 2) { // penultimate verticle
+            neighbours = { {i + 1, 't'}, {i - 2, 's'}, {i + 1, 'u'} };
+        } else if (i % 4 == 0) {
+            neighbours = { {i - 2, 't'}, {i + 2, 's'}, {i + 1, 'u'} };
+        } else if (i % 4 == 1) {
+            neighbours = { {i - 2, 't'}, {i + 2, 's'}, {i - 1, 'u'} };
+        } else if (i % 4 == 2) {
+            neighbours = { {i + 2, 't'}, {i - 2, 's'}, {i + 1, 'u'} };
+        } else if (i % 4 == 3) {
+            neighbours = { {i + 2, 't'}, {i - 2, 's'}, {i - 1, 'u'} };
+        }
+        graph.push_back(neighbours);
+    }
+    // operating with euler number
+    if (2 - euler_number > saddles) {
+        cout << "Uncorrect input: number of saddles must be lower or equal than (2 - euler_number)\n";
+        return graphs;
+    }
+    for (int i = euler_number; i < 2; i += 2) {
+        int j = 8 * (i - euler_number) / 2;
+        if (euler_number == 0 && saddles == 2) { // usual torus
+            graph[j][0].first = j + 1;
+            graph[j + 1][0].first = (j + 1) - 1;
+            graph[j + 2][0].first = (j + 2) + 4;
+            graph[j + 3][0].first = (j + 3) + 1;
+            graph[j + 4][0].first = (j + 4) - 1;
+            graph[j + 5][0].first = (j + 5) + 2;
+            graph[j + 6][0].first = (j + 6) - 4;
+            graph[j + 7][0].first = (j + 7) - 2;
+        } else if (i == euler_number) { // First step
+            if (2 - euler_number < saddles) {
+                graph[j][0].first = 8 * (2 - euler_number) / 2 + 1;
+            } else {
+                graph[j][0].first = 8 * (2 - euler_number) / 2 - 1;
+            }
+            graph[j + 1][0].first = (j + 1) + 4;
+            graph[j + 2][0].first = (j + 2) + 4;
+            graph[j + 3][0].first = (j + 3) + 1;
+            graph[j + 4][0].first = (j + 4) - 1;
+            graph[j + 5][0].first = (j + 5) - 4;
+            graph[j + 6][0].first = (j + 6) - 4;
+            graph[j + 7][0].first = (j + 7) + 1; // non-oriented graph
+            graph[(j + 7) + 1][0].first = j + 7; // non-oriented graph
+        } else if (i == 2 - 2 && 2 - euler_number == saddles) { // Last step
+            graph[j][0].first = j - 1;
+            graph[j + 1][0].first = (j + 1) + 4;
+            graph[j + 2][0].first = (j + 2) + 4;
+            graph[j + 3][0].first = (j + 3) + 1;
+            graph[j + 4][0].first = (j + 4) - 1;
+            graph[j + 5][0].first = (j + 5) - 4;
+            graph[j + 6][0].first = (j + 6) - 4;
+            graph[j + 7][0].first = 0;
+        } else {
+            graph[j][0].first = j - 1;
+            graph[j + 1][0].first = (j + 1) + 4;
+            graph[j + 2][0].first = (j + 2) + 4;
+            graph[j + 3][0].first = (j + 3) + 1;
+            graph[j + 4][0].first = (j + 4) - 1;
+            graph[j + 5][0].first = (j + 5) - 4;
+            graph[j + 6][0].first = (j + 6) - 4;
+            graph[j + 7][0].first = (j + 7) + 1; // non-oriented graph
+            graph[(j + 7) + 1][0].first = j + 7; // non-oriented graph
+        }
+    }
+    graphs.push_back(graph);
+    for (int i = (2 - euler_number) + 1; i < saddles; i += 2) {
+        int j = i * 4;
+        if (i == saddles - 1) {
+            graph[j][0].first = j - 1;
+            graph[j - 1][0].first = j;
+
+            graph[j + 1][0].first = (j + 1) + 2; //equal
+            graph[(j + 1) + 2][0].first = j + 1;
+
+
+            graph[j + 2][0].first = (j + 2) - 4;
+            graph[(j + 2) - 4][0].first = j + 2;
+
+            graph[j + 3][0].first = (j + 3) - 2; // equal
+            graph[(j + 3) - 2][0].first = j + 3;
+        } else {
+            graph[j][0].first = j - 1;
+            graph[j - 1][0].first = j;
+
+            graph[j + 1][0].first = (j + 1) + 4;
+            graph[(j + 1) + 4][0].first = j + 1;
+
+
+            graph[j + 2][0].first = (j + 2) - 4;
+            graph[(j + 2) - 4][0].first = j + 2;
+
+            graph[j + 3][0].first = (j + 3) + 1;
+            graph[(j + 3) + 1][0].first = j + 3;
+        }
+        graphs.push_back(graph);
+    }
+    int fixed_size = graphs.size();
+    for (int i = 0; i < fixed_size; i++) {
+        vector<vector<pair<int, char>>> graph_reverse(0);
+        graph_reverse.assign(graphs[i].begin(), graphs[i].end());
+        for (int j = 0; j < graph_reverse.size(); j++) {
+            int c = graph_reverse[j][1].first;
+            graph_reverse[j][1].first = graph_reverse[j][2].first;
+            graph_reverse[j][2].first = c;
+        }
+        graphs.push_back(graph_reverse);
+    }
+    return graphs;
 }
