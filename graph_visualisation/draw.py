@@ -134,8 +134,7 @@ class myjob(ThreeDScene):
         self.wait()
 
 class ParaSurface(ThreeDScene):
-    def func_sphere(self, u, v):
-        radius = 7
+    def func_sphere(self, u, v, radius = 1):
         sphereCentre = np.array([0, 0, 0])
         return radius * np.array([np.cos(u) * np.sin(v) - sphereCentre[0]/radius,
                                   np.sin(u) * np.sin(v) - sphereCentre[1]/radius,
@@ -151,7 +150,7 @@ class ParaSurface(ThreeDScene):
         y_label = axes.get_y_axis_label(Tex("y"))
         z_label = axes.get_z_axis_label(Tex("z"))
         mainSphere = Surface(
-            lambda u, v: axes.c2p(*self.func_sphere(u, v)),
+            lambda u, v: axes.c2p(*self.func_sphere(u, v, rng)),
             u_range=[0, TAU],
             v_range=[0, TAU],
             resolution=32, fill_opacity=0.1, checkerboard_colors=['#29ABCA', '#236B8E'], stroke_color=BLACK, stroke_width=0.1
@@ -161,7 +160,7 @@ class ParaSurface(ThreeDScene):
                 np.cos(u),
                 np.sin(u),
                 0
-            ]), color=RED, t_range = np.array([0, TAU, 0.01])
+            ]), color=RED, t_range = np.array([0, TAU/2, 0.01])
         )
         u_sep.set_z_index(mainSphere.z_index )
         u_sep.rotate(PI / 4, about_point=[0, 0, 0], axis=RIGHT)

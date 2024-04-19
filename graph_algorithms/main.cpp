@@ -2,6 +2,8 @@
 
 int main()
 {
+    // DYNAMICAL SYSTEM INFO TESTING
+    /*
     vector<vector<pair<int, char>>> graph;
     graph = { { {7, 't'}, { 7, 's'}, { 5, 'u'} },
             { {2, 't'}, {2, 's'}, {4, 'u'} },
@@ -11,7 +13,8 @@ int main()
             { {4, 't'}, {6, 's'}, {0, 'u'} },
             { {3, 't'}, {5, 's'}, {7, 'u'} },
             { {0, 't'}, {0, 's'}, {6, 'u'} } };
-    print_dynamical_system_info(graph);
+    print_dynamical_system_info(graph); */
+
     /*std::cout << "graph\n";
     int n, m;
     cin >> n >> m;
@@ -32,6 +35,9 @@ int main()
         cout << endl;
     }
     */
+
+    // GRAPH GENERATOR TESTING
+    /*
     vector<vector<vector<pair<int, char>>>> graphs = graph_generator(-2, 8);
     for (int i = 0; i < graphs.size(); i++) {
         cout << "----------------------\n";
@@ -43,6 +49,19 @@ int main()
             cout << "\n";
         }
         print_dynamical_system_info(graphs[i]);
+    }*/
+
+    // FIND NEIGHBORS TESTING
+    vector<vector<vector<pair<int, char>>>> graphs = graph_generator(2, 4);
+    print_dynamical_system_info(graphs[1]);
+    vector<pair<char, vector<int>>> neighbors = find_neighbors(graphs[1]);
+    for (int i = 0; i < neighbors.size(); i++) {
+        cout << i << " " << neighbors[i].first << " ";
+        for (int j = 0; j < neighbors[i].second.size(); j++) {
+            cout << neighbors[i].second[j] << " ";
+        }
+        cout << "\n";
     }
+
     system("pause");
 }

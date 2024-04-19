@@ -156,6 +156,7 @@ int count_euler_number(vector<vector<pair<int, char>>>& graph) {
 
 bool is_oriented_surface(vector<vector<pair<int, char>>>& graph) {
     // Graph is on oriented surface <=> length of all cycles is even
+    // WRONG CODE - ANY CYCLE MUST BE EVEN
     bool is_even = true;
     vector<vector<int>> cycles(0);
     vector<vector<int>> cycles_ut = find_cycles(graph, 'u', 't');
@@ -303,4 +304,73 @@ vector<vector<vector<pair<int, char>>>> graph_generator(int euler_number, int sa
         graphs.push_back(graph_reverse);
     }
     return graphs;
+}
+
+vector<pair<char, vector<int>>> find_neighbors(vector<vector<pair<int, char>>>& graph) {
+    vector<pair<char, vector<int>>> cycles(0);
+    // Sourses
+    vector<vector<int>> cycles_st = find_cycles(graph, 's', 't');
+    vector<pair<char, vector<int>>> a_cycles(0);
+    for (int i = 0; i < cycles_st.size(); i++) {
+        a_cycles.push_back(make_pair('a', cycles_st[i]));
+    }
+    // Drains
+    vector<vector<int>> cycles_ut = find_cycles(graph, 'u', 't');
+    vector<pair<char, vector<int>>> o_cycles(0);
+    for (int i = 0; i < cycles_ut.size(); i++) {
+        a_cycles.push_back(make_pair('o', cycles_ut[i]));
+    }
+    // Saddles
+    vector<vector<int>> cycles_su = find_cycles(graph, 's', 'u');
+    vector<pair<char, vector<int>>> s_cycles(0);
+    for (int i = 0; i < cycles_su.size(); i++) {
+        a_cycles.push_back(make_pair('s', cycles_su[i]));
+    }
+    // Uniting
+    cycles.insert(cycles.end(), a_cycles.begin(), a_cycles.end());
+    cycles.insert(cycles.end(), o_cycles.begin(), o_cycles.end());
+    cycles.insert(cycles.end(), s_cycles.begin(), s_cycles.end());
+    for (int i = 0; i < cycles.size(); i++) {
+        cout << i << " " << cycles[i].first << " ";
+        for (int j = 0; j < cycles[i].second.size(); j++) {
+            cout << cycles[i].second[j] << " ";
+        }
+        cout << "\n";
+    }
+    // Cycles-neighbors finding
+    int alphas = cycles_st.size();
+    int omegas = cycles_ut.size();
+    int sigmas = cycles_su.size();
+    vector<pair<char, vector<int>>> neighbors(0);
+    for (int i = 0; i < cycles.size(); i++) { // O(n^2) cycles
+        vector<int> empty_vector(0);
+        neighbors.push_back(make_pair(cycles[i].first, empty_vector));
+        char i_cycle_type = cycles[i].first;
+        for (int j = 0; j < cycles[i].second.size(); j++) {
+            int a1 = cycles[i].second[j];
+            int a2 = cycles[i].second[(j + 1) % cycles[i].second.size()];
+            bool is_found = false;
+            for (int k = 0; k < cycles.size(); k++) {
+                char k_cycle_type = cycles[k].first;
+                if ((i_cycle_type == 'a' && k_cycle_type == 's') || (i_cycle_type == 'o' && k_cycle_type == 's') || (i_cycle_type == 's' && ((k_cycle_type == 'a' && graph[a1][1].first == a2) || (k_cycle_type == 'o' && graph[a1][2].first == a2)))) {
+                    if (k == i) {
+                        continue;
+                    }
+                    for (int t = 0; t < cycles[k].second.size(); t++) {
+                        int b1 = cycles[k].second[t];
+                        int b2 = cycles[k].second[(t + 1) % cycles[k].second.size()];
+                        if ((a1 == b1 && a2 == b2) || (a1 == b2 && a2 == b1)) {
+                            neighbors[i].second.push_back(k);
+                            is_found == true;
+                            break;
+                        }
+                    }
+                }
+                if (is_found) {
+                    break;
+                }
+            }
+        }
+    }
+    return neighbors;
 }
