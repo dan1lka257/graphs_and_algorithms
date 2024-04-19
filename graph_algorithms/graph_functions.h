@@ -330,13 +330,6 @@ vector<pair<char, vector<int>>> find_neighbors(vector<vector<pair<int, char>>>& 
     cycles.insert(cycles.end(), a_cycles.begin(), a_cycles.end());
     cycles.insert(cycles.end(), o_cycles.begin(), o_cycles.end());
     cycles.insert(cycles.end(), s_cycles.begin(), s_cycles.end());
-    for (int i = 0; i < cycles.size(); i++) {
-        cout << i << " " << cycles[i].first << " ";
-        for (int j = 0; j < cycles[i].second.size(); j++) {
-            cout << cycles[i].second[j] << " ";
-        }
-        cout << "\n";
-    }
     // Cycles-neighbors finding
     int alphas = cycles_st.size();
     int omegas = cycles_ut.size();
@@ -352,7 +345,7 @@ vector<pair<char, vector<int>>> find_neighbors(vector<vector<pair<int, char>>>& 
             bool is_found = false;
             for (int k = 0; k < cycles.size(); k++) {
                 char k_cycle_type = cycles[k].first;
-                if ((i_cycle_type == 'a' && k_cycle_type == 's') || (i_cycle_type == 'o' && k_cycle_type == 's') || (i_cycle_type == 's' && ((k_cycle_type == 'a' && graph[a1][1].first == a2) || (k_cycle_type == 'o' && graph[a1][2].first == a2)))) {
+                if (((i_cycle_type == 'a' && k_cycle_type == 's' && graph[a1][1].first == a2)) || (i_cycle_type == 'o' && k_cycle_type == 's' && graph[a1][2].first == a2) || (i_cycle_type == 's' && ((k_cycle_type == 'a' && graph[a1][1].first == a2) || (k_cycle_type == 'o' && graph[a1][2].first == a2)))) {
                     if (k == i) {
                         continue;
                     }
@@ -365,10 +358,13 @@ vector<pair<char, vector<int>>> find_neighbors(vector<vector<pair<int, char>>>& 
                             break;
                         }
                     }
+                    if (is_found) {
+                        break;
+                    }
                 }
-                if (is_found) {
-                    break;
-                }
+            }
+            if (cycles[i].second.size() == 2) {
+                break;
             }
         }
     }
