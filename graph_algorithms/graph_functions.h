@@ -370,3 +370,78 @@ vector<pair<char, vector<int>>> find_neighbors(vector<vector<pair<int, char>>>& 
     }
     return neighbors;
 }
+
+bool is_separatres_cross(vector<float> sep1, vector<float> sep2) {
+    float a = sep1[0], a0 = sep1[1], b = sep1[2], b1 = sep1[3], t1 = sep1[4], t2 = sep1[5];
+    float c = sep1[0], c0 = sep1[1], d = sep1[2], d1 = sep1[3], k1 = sep1[4], k2 = sep1[5];
+    max_t = max(t1, t2);
+    min_t = min(t1, t2);
+    t1 = min_t;
+    t2 = max_t;
+    max_k = max(k1, k2);
+    min_k = min(k1, k2);
+    k1 = min_k;
+    k2 = max_k;
+    if ((a0 != c0 || b0 != d0) && a/c == b/d) {
+        return false; // parallel
+    }
+    if (a0 == c0 && b0 == d0 && a/c == b/d && t2 > k1 && k2 > t1) {
+        return true; // coincide
+    }
+    float y_cross = (b * d * c0 - b * c * d0 - b * d * a0 + d * a * b0) / (d * a - b * c);
+    float x_cross;
+    float t_cross, k_cross;
+    if (b != 0) {
+        t_cross = (y_cross - b0) / b;
+    } else {
+        x_cross = (c * y_cross - c * d0) / d + c0;
+        t_cross = (x_cross - a0) / a;
+    }
+    if (d != 0) {
+        k_cross = (y_cross - d0) / d;
+    } else {
+        x_cross = (a * y_cross - a * b0) / b + a0;
+    }
+    return (t1 < t_cross && t_cross < t2) && (k1 < k_cross && k_cross < k2);
+}
+
+vector<pair<float, float>> find_separatres_coords(vector<vector<pair<int, char>>>& graph) {
+    vector<pair<char, vector<int>>> neighbors;
+    neighbors = find_neighbors(graph);
+    int sourses_num = 0;
+    int saddles_num = 0;
+    int drains_num = 0;
+    // Count sourses, saddles and drains number
+    for (int i = 0; i < neighbors.size(); i++) {
+        if (neighbors.first == 'a') {
+            sourses_num++;
+        } else if (neighbors.first == 's') {
+            saddles_num++;
+        } else if (neighbors.first == 'o') {
+            drains_num++;
+        }
+    }
+    int side_len = 2 * sourses_num - 1;
+    int center_len = 2 * drains_num - 1;
+    vector<pair<char, pair<float, float>>> side;
+    vector<pair<char, pair<float, float>>> center;
+    for (int i = 1; i < side_len + 1; i++) {
+        float y = 180 * i / (side_len + 2) - 90;
+        if (i % 2) {
+            side.push_back(make_pair('a', make_pair(0, y)));
+        } else {
+            side.push_back(make_pair('s', make_pair(0, y)));
+        }
+    }
+    for (int i = 1; i < center_len + 1; i++) {
+        float y = 180 * i / (center_len + 2);
+        if (i % 2) {
+            center.push_back(make_pair('o', make_pair(0, y)));
+        } else {
+            center.push_back(make_pair('s', make_pair(0, y)));
+        }
+    }
+    vector<pair<float, float>> left;
+    vector<pair<float, float>> right;
+    // TODO: MAKE SEPARATRES
+}
