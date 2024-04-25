@@ -62,6 +62,14 @@ int main()
         }
         cout << "\n";
     }
+    vector<pair<char, vector<float>>> separatres_coords = find_separatres_coords(graphs[1]);
+    /*for (int i = 0; i < separatres_coords.size(); i++) {
+        cout << separatres_coords[i].first << " ";
+        for (int j = 0; j < separatres_coords[i].second.size(); j++) {
+            cout << separatres_coords[i].second[j] << " ";
+        }
+        cout << "\n";
+    }*/
 
     system("pause");
 }
