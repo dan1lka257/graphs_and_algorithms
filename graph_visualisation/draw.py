@@ -135,12 +135,15 @@ class myjob(ThreeDScene):
 
 class ParaSurface(ThreeDScene):
     separatress = []
-    with open('../topython.txt') as file:
+    with open('../separatres.txt') as file:
         lines = [line.rstrip() for line in file]
         for line in lines:
             separatress.append([line[0]] + list(map(int, line[2:].split(' '))))
-    for i in separatress:
-        print(i)
+    dots = []
+    with open('../dots.txt') as file:
+        lines = [line.rstrip() for line in file]
+        for line in lines:
+            dots.append(list(map(int, line.split(' '))))
 
     def func_sphere(self, u, v, radius = 1):
         sphereCentre = np.array([0, 0, 0])
@@ -164,15 +167,44 @@ class ParaSurface(ThreeDScene):
             resolution=32, fill_opacity=0.1, checkerboard_colors=['#29ABCA', '#236B8E'], stroke_color=BLACK, stroke_width=0.1
         )
         for sep in self.separatress:
-            u_sep = ParametricFunction(
+            u_sep1 = ParametricFunction(
                 lambda t: (0.5 * rng) * np.array([
                     np.cos(np.pi * (t * sep[3] + sep[4]) / 180) * np.sin(np.pi * (t * sep[1] + sep[2]) / 180),
                     np.cos(np.pi * (t * sep[3] + sep[4]) / 180) * np.cos(np.pi * (t * sep[1] + sep[2]) / 180),
                     np.sin(np.pi * (t * sep[3] + sep[4]) / 180)
-                ]), color=RED if sep[0]=='u' else BLUE, t_range = np.array([0, 1, 0.01])
+                ]), color=RED_A if sep[0]=='u' else BLUE_A, t_range = np.array([0, 1/3, 0.01])
             )
-            u_sep.set_z_index(mainSphere.z_index)
-            self.add(u_sep)
+            u_sep1.set_z_index(mainSphere.z_index)
+            self.add(u_sep1)
+
+            u_sep2 = ParametricFunction(
+                lambda t: (0.5 * rng) * np.array([
+                    np.cos(np.pi * (t * sep[3] + sep[4]) / 180) * np.sin(np.pi * (t * sep[1] + sep[2]) / 180),
+                    np.cos(np.pi * (t * sep[3] + sep[4]) / 180) * np.cos(np.pi * (t * sep[1] + sep[2]) / 180),
+                    np.sin(np.pi * (t * sep[3] + sep[4]) / 180)
+                ]), color=RED_C if sep[0]=='u' else BLUE_C, t_range = np.array([1/3, 2/3, 0.01])
+            )
+            u_sep2.set_z_index(mainSphere.z_index)
+            self.add(u_sep2)
+
+            u_sep3 = ParametricFunction(
+                lambda t: (0.5 * rng) * np.array([
+                    np.cos(np.pi * (t * sep[3] + sep[4]) / 180) * np.sin(np.pi * (t * sep[1] + sep[2]) / 180),
+                    np.cos(np.pi * (t * sep[3] + sep[4]) / 180) * np.cos(np.pi * (t * sep[1] + sep[2]) / 180),
+                    np.sin(np.pi * (t * sep[3] + sep[4]) / 180)
+                ]), color=RED_E if sep[0]=='u' else BLUE_E, t_range = np.array([2/3, 1, 0.01])
+            )
+            u_sep3.set_z_index(mainSphere.z_index)
+            self.add(u_sep3)
+        
+        for dot in self.dots:
+            u_dot = Dot((0.5 * rng) * np.array([
+                    np.cos(np.pi * (dot[2]) / 180) * np.sin(np.pi * (dot[1]) / 180),
+                    np.cos(np.pi * (dot[2]) / 180) * np.cos(np.pi * (dot[1]) / 180),
+                    np.sin(np.pi * (dot[2]) / 180)
+                ]), color=YELLOW_E)
+            u_dot.set_z_index(mainSphere.z_index)
+            self.add(u_dot)
         # u_sep.rotate(PI / 4, about_point=[0, 0, 0], axis=RIGHT)
         self.add(axes, mainSphere, x_label, y_label, z_label)
         self.set_camera_orientation(theta=75*DEGREES, phi=75*DEGREES)
