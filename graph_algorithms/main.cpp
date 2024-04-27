@@ -1,7 +1,12 @@
 #include "graph_functions.h"
+#include <fstream>
 
-int main()
-{
+int main() {
+    // ENTERED GRAPH MUST BE INVOLVED IS SCTRICT REQUIREMENTS
+    ifstream fin;
+    ofstream fout;
+    fin.open("../tocpp.txt");
+    fout.open("../topython.txt", ios::trunc);
     // DYNAMICAL SYSTEM INFO TESTING
     /*
     vector<vector<pair<int, char>>> graph;
@@ -71,5 +76,14 @@ int main()
         cout << "\n";
     }*/
 
-    system("pause");
+    for (int i = 0; i < separatres_coords.size(); i++) {
+        fout << separatres_coords[i].first << " ";
+        for (int j = 0; j < separatres_coords[i].second.size(); j++) {
+            fout << separatres_coords[i].second[j] << " ";
+        }
+        fout << "\n";
+    }
+    fout.close();
+    fin.close();
+    return 0;
 }

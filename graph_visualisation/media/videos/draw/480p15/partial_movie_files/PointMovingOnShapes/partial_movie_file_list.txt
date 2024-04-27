@@ -1,2 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/PointMovingOnShapes/4266129954_1390239550_223132457.mp4'

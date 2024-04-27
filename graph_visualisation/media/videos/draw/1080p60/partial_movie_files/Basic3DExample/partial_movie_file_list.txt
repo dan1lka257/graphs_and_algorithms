@@ -1,6 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/1080p60/partial_movie_files/Basic3DExample/4214285722_3649831050_223132457.mp4'
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/1080p60/partial_movie_files/Basic3DExample/2165180916_4253145783_2305711604.mp4'
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/1080p60/partial_movie_files/Basic3DExample/2165180916_3009564998_2305711604.mp4'
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/1080p60/partial_movie_files/Basic3DExample/2165180916_1444395866_2305711604.mp4'
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/1080p60/partial_movie_files/Basic3DExample/2165180916_567571361_2305711604.mp4'

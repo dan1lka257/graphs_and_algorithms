@@ -134,6 +134,14 @@ class myjob(ThreeDScene):
         self.wait()
 
 class ParaSurface(ThreeDScene):
+    separatress = []
+    with open('../topython.txt') as file:
+        lines = [line.rstrip() for line in file]
+        for line in lines:
+            separatress.append([line[0]] + list(map(int, line[2:].split(' '))))
+    for i in separatress:
+        print(i)
+
     def func_sphere(self, u, v, radius = 1):
         sphereCentre = np.array([0, 0, 0])
         return radius * np.array([np.cos(u) * np.sin(v) - sphereCentre[0]/radius,
@@ -155,14 +163,19 @@ class ParaSurface(ThreeDScene):
             v_range=[0, TAU],
             resolution=32, fill_opacity=0.1, checkerboard_colors=['#29ABCA', '#236B8E'], stroke_color=BLACK, stroke_width=0.1
         )
-        u_sep = ParametricFunction(
-            lambda u: (0.5 * 7) * np.array([
-                np.cos(u),
-                np.sin(u),
-                0
-            ]), color=RED, t_range = np.array([0, TAU/2, 0.01])
-        )
-        u_sep.set_z_index(mainSphere.z_index )
-        u_sep.rotate(PI / 4, about_point=[0, 0, 0], axis=RIGHT)
-        self.set_camera_orientation(theta=70*DEGREES, phi=75*DEGREES)
-        self.add(axes, u_sep, mainSphere, x_label, y_label, z_label)
+        for sep in self.separatress:
+            u_sep = ParametricFunction(
+                lambda t: (0.5 * rng) * np.array([
+                    np.cos(np.pi * (t * sep[3] + sep[4]) / 180) * np.sin(np.pi * (t * sep[1] + sep[2]) / 180),
+                    np.cos(np.pi * (t * sep[3] + sep[4]) / 180) * np.cos(np.pi * (t * sep[1] + sep[2]) / 180),
+                    np.sin(np.pi * (t * sep[3] + sep[4]) / 180)
+                ]), color=RED if sep[0]=='u' else BLUE, t_range = np.array([0, 1, 0.01])
+            )
+            u_sep.set_z_index(mainSphere.z_index)
+            self.add(u_sep)
+        # u_sep.rotate(PI / 4, about_point=[0, 0, 0], axis=RIGHT)
+        self.add(axes, mainSphere, x_label, y_label, z_label)
+        self.set_camera_orientation(theta=75*DEGREES, phi=75*DEGREES)
+        self.begin_ambient_camera_rotation(rate=PI/10, about='theta')
+        self.wait(10)
+        self.stop_ambient_camera_rotation()

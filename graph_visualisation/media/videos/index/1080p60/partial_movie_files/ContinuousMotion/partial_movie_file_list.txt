@@ -1,2 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/index/1080p60/partial_movie_files/ContinuousMotion/2902699114_1833080632_3751175205.mp4'

@@ -1,4 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/Rotation3DExample/3027406790_3003697627_729892282.mp4'
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/Rotation3DExample/4249718252_1932961374_251420975.mp4'
-file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/Rotation3DExample/821635039_1070433933_1763837201.mp4'
