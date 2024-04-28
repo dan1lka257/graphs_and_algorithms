@@ -31,10 +31,32 @@ vector<int> bfs(int s, vector<vector<pair<int, char>>>& graph) {
     while (!q.empty()) {
         int v = q.front();
         q.pop();
-        for (pair<int, int> u : graph[v]) {
+        for (pair<int, char> u : graph[v]) {
             if (dist[u.first] > dist[v] + 1) {
                 dist[u.first] = dist[v] + 1;
                 q.push(u.first);
+            }
+        }
+    }
+
+    return dist;
+}
+
+vector<int> bfs(int s, vector<vector<int>>& graph) {
+    // BFS which find distance to other verticles
+    int n = graph.size();
+    vector<int> dist(n, INF);
+    dist[s] = 0;
+    queue<int> q;
+    q.push(s);
+
+    while (!q.empty()) {
+        int v = q.front();
+        q.pop();
+        for (int u : graph[v]) {
+            if (dist[u] > dist[v] + 1) {
+                dist[u] = dist[v] + 1;
+                q.push(u);
             }
         }
     }
@@ -160,21 +182,45 @@ int count_euler_number(vector<vector<pair<int, char>>>& graph) {
 
 bool is_oriented_surface(vector<vector<pair<int, char>>>& graph) {
     // Graph is on oriented surface <=> length of all cycles is even
-    // WRONG CODE - ANY CYCLE MUST BE EVEN
-    bool is_even = true;
-    vector<vector<int>> cycles(0);
-    vector<vector<int>> cycles_ut = find_cycles(graph, 'u', 't');
-    vector<vector<int>> cycles_su = find_cycles(graph, 's', 'u');
-    vector<vector<int>> cycles_st = find_cycles(graph, 's', 't');
-    cycles.insert(cycles.end(), cycles_ut.begin(), cycles_ut.end());
-    cycles.insert(cycles.end(), cycles_su.begin(), cycles_su.end());
-    cycles.insert(cycles.end(), cycles_st.begin(), cycles_st.end());
-    for (int i = 0; i < cycles.size(); i++) {
-        if (cycles[i].size() % 2 != 0) {
-            is_even = false;
+    // All cycles is even <=> any cycle from base of cycles is even
+    vector<vector<int>> spanning_tree(graph.size(), vector<int> ());
+    vector<int> visited(graph.size(), 0);
+    // Creating spanning tree for future cycle finding
+    for (int i = 0; i < graph.size(); i++) {
+        vector<int> i_neighbors;
+        for (int j = 0; j < graph[i].size(); j++) {
+            if (visited[graph[i][j].first] == 0) {
+                spanning_tree[i].push_back(graph[i][j].first);
+                spanning_tree[graph[i][j].first].push_back(i);
+                i_neighbors.push_back(j);
+                visited[graph[i][j].first] = 1;
+                visited[i] = 1;
+            }
         }
     }
-    return is_even;
+    vector<int> way_from_root = bfs(0, spanning_tree);
+    // Finding base of cycles & checking if cycles is even
+    vector<vector<int>> base;
+    bool is_even_base = true;
+    for (int i = 0; i < graph.size(); i++) {
+        for (int j = 0; j < graph[i].size(); j++) {
+            bool is_in = false;
+            for (int k = 0; k < spanning_tree[i].size(); k++) {
+                if (graph[i][j].first == spanning_tree[i][k]) {
+                    is_in = true;
+                    break;
+                }
+            }
+            if (!is_in && (way_from_root[i] + way_from_root[graph[i][j].first] + 1) % 2 == 1) {
+                is_even_base = false;
+                break;
+            }
+        }
+        if (!is_even_base) {
+            break;
+        }
+    }
+    return is_even_base;
 }
 
 void print_dynamical_system_info(vector<vector<pair<int, char>>>& graph) {
@@ -1027,3 +1073,4 @@ vector<pair<int, pair<float, float>>> find_dots_coords(vector<vector<pair<int, c
     side.insert(side.end(), center.begin(), center.end());
     return side;
 }
+
