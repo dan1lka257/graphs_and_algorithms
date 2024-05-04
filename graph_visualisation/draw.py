@@ -139,12 +139,7 @@ class ParaSurface(ThreeDScene):
         lines = [line.rstrip() for line in file]
         for line in lines:
             separatress.append([line[0]] + list(map(int, line[2:].split(' '))))
-    dots = []
-    with open('../dots.txt') as file:
-        lines = [line.rstrip() for line in file]
-        for line in lines:
-            dots.append(list(map(int, line.split(' '))))
-
+    
     def func_sphere(self, u, v, radius = 1):
         sphereCentre = np.array([0, 0, 0])
         return radius * np.array([np.cos(u) * np.sin(v) - sphereCentre[0]/radius,
@@ -196,15 +191,6 @@ class ParaSurface(ThreeDScene):
             )
             u_sep3.set_z_index(mainSphere.z_index)
             self.add(u_sep3)
-        
-        for dot in self.dots:
-            u_dot = Dot((0.5 * rng) * np.array([
-                    np.cos(np.pi * (dot[2]) / 180) * np.sin(np.pi * (dot[1]) / 180),
-                    np.cos(np.pi * (dot[2]) / 180) * np.cos(np.pi * (dot[1]) / 180),
-                    np.sin(np.pi * (dot[2]) / 180)
-                ]), color=YELLOW_E)
-            u_dot.set_z_index(mainSphere.z_index)
-            self.add(u_dot)
         # u_sep.rotate(PI / 4, about_point=[0, 0, 0], axis=RIGHT)
         self.add(axes, mainSphere, x_label, y_label, z_label)
         self.set_camera_orientation(theta=75*DEGREES, phi=75*DEGREES)

@@ -81,7 +81,7 @@ int main() {
         cout << "\n";
     }*/
     vector<vector<vector<pair<int, char>>>> graphs = graph_generator(2, 8);
-    vector<pair<char, vector<float>>> separatres_coords = find_separatres_coords(non_oriented_graph);
+    vector<pair<char, vector<float>>> separatres_coords = find_separatres_coords(graphs[0]);
     /*for (int i = 0; i < separatres_coords.size(); i++) {
         cout << separatres_coords[i].first << " ";
         for (int j = 0; j < separatres_coords[i].second.size(); j++) {
@@ -97,13 +97,6 @@ int main() {
             fout << separatres_coords[i].second[j] << " ";
         }
         fout << "\n";
-    }
-    fout.close();
-
-    vector<pair<int, pair<float, float>>> dots_coords = find_dots_coords(graphs[6]);
-    fout.open("../dots.txt", ios::trunc);
-    for (int i = 0; i < dots_coords.size(); i++) {
-        fout << dots_coords[i].first << " " << dots_coords[i].second.first << " " << dots_coords[i].second.second << "\n";
     }
     fout.close();
     fin.close();
