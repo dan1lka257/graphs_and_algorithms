@@ -83,11 +83,11 @@ bool is_3_colored_and_non_oriented(vector<vector<pair<int, char>>>& graph) {
             }
         }
         if (!(color_u == 1 && color_s == 1 && color_t == 1)) {
-            cout << "Graph is not 3 colored" << endl;
+            // Graph is not 3 colored
             return false;
         }
         if (!(oriented)) {
-            cout << "Graph is not oriented" << endl;
+            // Graph is not oriented
             return false;
         }
     }
@@ -223,15 +223,16 @@ bool is_oriented_surface(vector<vector<pair<int, char>>>& graph) {
     return is_even_base;
 }
 
-void print_dynamical_system_info(vector<vector<pair<int, char>>>& graph) {
-    // Print dynamical system info
-    cout << "Is acceptable graph?\t" << is_acceptable(graph) << "\n";
-    cout << "Is oriented surface?\t" << is_oriented_surface(graph) << "\n";
-    cout << "Euler Number\t\t" << count_euler_number(graph) << "\n";
-    cout << "Number of sources\t" << find_cycles(graph, 's', 't').size() << "\n";
-    cout << "Number of saddles\t" << find_cycles(graph, 'u', 's').size() << "\n";
-    cout << "Number of drains\t" << find_cycles(graph, 'u', 't').size() << "\n";
-    // TODO: isomorphism
+vector<int> print_dynamical_system_info(vector<vector<pair<int, char>>>& graph) {
+    // Prints dynamical system info
+    // result[0] - Is graph acceptable?
+    // result[1] - Is surface oriented?
+    // result[2] - Euler Number
+    // result[3] - Number of sources
+    // result[4] - Number of saddles
+    // result[5] - Number of drains
+    vector<int> result = {(int)is_acceptable(graph), (int)is_oriented_surface(graph), count_euler_number(graph), find_cycles(graph, 's', 't').size(), find_cycles(graph, 'u', 's').size(), find_cycles(graph, 'u', 't').size()}
+    return result;
 }
 
 vector<vector<vector<pair<int, char>>>> graph_generator(int euler_number, int saddles) {
