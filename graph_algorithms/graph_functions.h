@@ -231,7 +231,7 @@ vector<int> print_dynamical_system_info(vector<vector<pair<int, char>>>& graph) 
     // result[3] - Number of sources
     // result[4] - Number of saddles
     // result[5] - Number of drains
-    vector<int> result = {(int)is_acceptable(graph), (int)is_oriented_surface(graph), count_euler_number(graph), find_cycles(graph, 's', 't').size(), find_cycles(graph, 'u', 's').size(), find_cycles(graph, 'u', 't').size()}
+    vector<int> result = {(int)is_acceptable(graph), (int)is_oriented_surface(graph), count_euler_number(graph), find_cycles(graph, 's', 't').size(), find_cycles(graph, 'u', 's').size(), find_cycles(graph, 'u', 't').size()};
     return result;
 }
 
@@ -459,6 +459,89 @@ bool is_separatres_cross(vector<float> sep1, vector<float> sep2) {
     return is_crossing;
 }
 
+vector<pair<char, vector<float>>> find_sep(int side_len, int center_len, vector<pair<char, int>> sourse_order, vector<pair<char, int>> drain_order, vector<pair<char, vector<int>>> neighbors) {
+    vector<pair<int, pair<float, float>>> side(side_len);
+    vector<pair<int, pair<float, float>>> center(center_len);
+    for (int i = 1; i < side_len + 1; i++) {
+        float y = -180 * i / (side_len + 1) + 90;
+        side[i - 1] = (make_pair(sourse_order[i - 1].second, make_pair(0, y)));
+    }
+    for (int i = 1; i < center_len + 1; i++) {
+        float y = -180 * i / (center_len + 1) + 90;
+        center[i - 1] = (make_pair(drain_order[i - 1].second, make_pair(180, y)));
+    }
+
+    vector<pair<char, vector<float>>> left;
+    vector<pair<char, vector<float>>> right;
+    for (int i = 0; i < side.size(); i++) {
+        if (i % 2) {
+            vector<float> coords = {side[i - 1].second.first - side[i].second.first, side[i].second.first, side[i - 1].second.second - side[i].second.second, side[i].second.second, 0, 1};
+            right.push_back(make_pair('s', coords));
+            coords = {side[i + 1].second.first - side[i].second.first, side[i].second.first, side[i + 1].second.second - side[i].second.second, side[i].second.second, 0, 1};
+            right.push_back(make_pair('s', coords));
+        }
+    }
+    for (int i = 0; i < center.size(); i++) {
+        if (i % 2) {
+            vector<float> coords = {center[i - 1].second.first - center[i].second.first, center[i].second.first, center[i - 1].second.second - center[i].second.second, center[i].second.second, 0, 1};
+            right.push_back(make_pair('u', coords));
+            coords = {center[i + 1].second.first - center[i].second.first, center[i].second.first, center[i + 1].second.second - center[i].second.second, center[i].second.second, 0, 1};
+            right.push_back(make_pair('u', coords));
+        }
+    }
+
+    for (int i = 0; i < sourse_order.size(); i++) {
+        if (true /*sourse_order[i].first == 's'*/) {
+            for (int j = 0; j < neighbors[sourse_order[i].second].second.size(); j++) {
+                if (neighbors[sourse_order[i].second].second[j] == sourse_order[(i - 1 + sourse_order.size()) % sourse_order.size()].second || neighbors[sourse_order[i].second].second[j] == sourse_order[(i + 1 + sourse_order.size()) % sourse_order.size()].second) {
+                    continue;
+                }
+                float xi, yi, xj, yj;
+                for (int k = 0; k < side.size(); k++) {
+                    if (side[k].first == sourse_order[i].second) {
+                        xi = side[k].second.first;
+                        yi = side[k].second.second;
+                        break;
+                    }
+                }
+                for (int k = 0; k < center.size(); k++) {
+                    if (center[k].first == neighbors[sourse_order[i].second].second[j]) {
+                        xj = center[k].second.first;
+                        yj = center[k].second.second;
+                        break;
+                    }
+                }
+                vector<float> sep = {xj - xi, xi, yj - yi, yi, 0, 1};
+                bool is_crossing = false;
+                for (int k = 0; k < left.size(); k++) {
+                    if (is_separatres_cross(sep, left[k].second)) {
+                        is_crossing = true;
+                        break;
+                    }
+                }
+                if (is_crossing) {
+                    sep = {xj - (xi + 360), (xi + 360), yj - yi, yi, 0, 1};
+                    if (sourse_order[i].first == 's') {
+                        right.push_back(make_pair('u', sep));
+                    } else if (sourse_order[i].first == 'a') {
+                        sep = {xi - xj, xj, yi - yj, yj, 0, 1};
+                        right.push_back(make_pair('s', sep));
+                    }
+                } else {
+                    if (sourse_order[i].first == 's') {
+                        left.push_back(make_pair('u', sep));
+                    } else if (sourse_order[i].first == 'a') {
+                        sep = {xi - xj, xj, yi - yj, yj, 0, 1};
+                        left.push_back(make_pair('s', sep));
+                    }
+                }
+            }
+        }
+    }
+    left.insert(left.end(), right.begin(), right.end());
+    return left;
+}
+
 vector<pair<char, vector<float>>> find_separatres_coords(vector<vector<pair<int, char>>>& graph) {
     vector<pair<char, vector<int>>> neighbors;
     neighbors = find_neighbors(graph);
@@ -481,7 +564,6 @@ vector<pair<char, vector<float>>> find_separatres_coords(vector<vector<pair<int,
     int side_len = 2 * sourses_num - 1;
     int center_len = 2 * drains_num - 1;
     vector<pair<char, int>> sourse_order;
-    vector<pair<char, int>> drain_order;
     pair<int, vector<int>> curr_v = sourses[0];
     sourse_order.push_back(make_pair('a', curr_v.first));
     while (sourse_order.size() != side_len) {
@@ -558,6 +640,7 @@ vector<pair<char, vector<float>>> find_separatres_coords(vector<vector<pair<int,
             }
         }
     }
+    vector<pair<char, int>> drain_order;
     curr_v = drains[0];
     drain_order.push_back(make_pair('o', curr_v.first));
     while (drain_order.size() != center_len) {
@@ -640,243 +723,24 @@ vector<pair<char, vector<float>>> find_separatres_coords(vector<vector<pair<int,
             }
         }
     }
-    vector<pair<int, pair<float, float>>> side(side_len);
-    vector<pair<int, pair<float, float>>> center(center_len);
-    for (int i = 1; i < side_len + 1; i++) {
-        float y = -180 * i / (side_len + 1) + 90;
-        side[i - 1] = (make_pair(sourse_order[i - 1].second, make_pair(0, y)));
-    }
-    for (int i = 1; i < center_len + 1; i++) {
-        float y = -180 * i / (center_len + 1) + 90;
-        center[i - 1] = (make_pair(drain_order[i - 1].second, make_pair(180, y)));
-    }
-
     vector<pair<char, vector<float>>> left;
-    vector<pair<char, vector<float>>> right;
-    for (int i = 0; i < side.size(); i++) {
-        if (i % 2) {
-            vector<float> coords = {side[i - 1].second.first - side[i].second.first, side[i].second.first, side[i - 1].second.second - side[i].second.second, side[i].second.second, 0, 1};
-            right.push_back(make_pair('s', coords));
-            coords = {side[i + 1].second.first - side[i].second.first, side[i].second.first, side[i + 1].second.second - side[i].second.second, side[i].second.second, 0, 1};
-            right.push_back(make_pair('s', coords));
-        }
-    }
-    for (int i = 0; i < center.size(); i++) {
-        if (i % 2) {
-            vector<float> coords = {center[i - 1].second.first - center[i].second.first, center[i].second.first, center[i - 1].second.second - center[i].second.second, center[i].second.second, 0, 1};
-            right.push_back(make_pair('u', coords));
-            coords = {center[i + 1].second.first - center[i].second.first, center[i].second.first, center[i + 1].second.second - center[i].second.second, center[i].second.second, 0, 1};
-            right.push_back(make_pair('u', coords));
-        }
-    }
-
-    for (int i = 0; i < sourse_order.size(); i++) {
-        if (true /*sourse_order[i].first == 's'*/) {
-            for (int j = 0; j < neighbors[sourse_order[i].second].second.size(); j++) {
-                if (neighbors[sourse_order[i].second].second[j] == sourse_order[(i - 1 + sourse_order.size()) % sourse_order.size()].second || neighbors[sourse_order[i].second].second[j] == sourse_order[(i + 1 + sourse_order.size()) % sourse_order.size()].second) {
-                    continue;
-                }
-                float xi, yi, xj, yj;
-                for (int k = 0; k < side.size(); k++) {
-                    if (side[k].first == sourse_order[i].second) {
-                        xi = side[k].second.first;
-                        yi = side[k].second.second;
-                        break;
-                    }
-                }
-                for (int k = 0; k < center.size(); k++) {
-                    if (center[k].first == neighbors[sourse_order[i].second].second[j]) {
-                        xj = center[k].second.first;
-                        yj = center[k].second.second;
-                        break;
-                    }
-                }
-                vector<float> sep = {xj - xi, xi, yj - yi, yi, 0, 1};
-                bool is_crossing = false;
-                for (int k = 0; k < left.size(); k++) {
-                    if (is_separatres_cross(sep, left[k].second)) {
-                        is_crossing = true;
-                        break;
-                    }
-                }
-                if (is_crossing) {
-                    sep = {xj - (xi + 360), (xi + 360), yj - yi, yi, 0, 1};
-                    if (sourse_order[i].first == 's') {
-                        right.push_back(make_pair('u', sep));
-                    } else if (sourse_order[i].first == 'a') {
-                        sep = {xi - xj, xj, yi - yj, yj, 0, 1};
-                        right.push_back(make_pair('s', sep));
-                    }
-                } else {
-                    if (sourse_order[i].first == 's') {
-                        left.push_back(make_pair('u', sep));
-                    } else if (sourse_order[i].first == 'a') {
-                        sep = {xi - xj, xj, yi - yj, yj, 0, 1};
-                        left.push_back(make_pair('s', sep));
-                    }
-                }
-            }
-        }
-    }
-
-    /*for (int i = 0; i < drain_order.size(); i++) {
-        if (drain_order[i].first == 's') {
-            for (int j = 0; j < neighbors[drain_order[i].second].second.size(); j++) {
-                if (neighbors[drain_order[i].second].second[j] == drain_order[(i - 1 + drain_order.size()) % drain_order.size()].second || neighbors[drain_order[i].second].second[j] == drain_order[(i + 1 + drain_order.size()) % drain_order.size()].second) {
-                    continue;
-                }
-                float xi, yi, xj, yj;
-                for (int k = 0; k < center.size(); k++) {
-                    if (center[k].first == drain_order[i].second) {
-                        xi = center[k].second.first;
-                        yi = center[k].second.second;
-                        break;
-                    }
-                }
-                for (int k = 0; k < side.size(); k++) {
-                    if (side[k].first == neighbors[drain_order[i].second].second[j]) {
-                        xj = side[k].second.first;
-                        yj = side[k].second.second;
-                        break;
-                    }
-                }
-                vector<float> sep = {xj - xi, xi, yj - yi, yi, 0, 1};
-                bool is_crossing = false;
-                for (int k = 0; k < left.size(); k++) {
-                    if (is_separatres_cross(sep, left[k].second)) {
-                        is_crossing = true;
-                    }
-                }
-                if (is_crossing) {
-                    sep = {(xj + 360) - xi, xi, yj - yi, yi, 0, 1};
-                    right.push_back(make_pair('s', sep));
-                } else {
-                    left.push_back(make_pair('s', sep));
-                }
-            }
-        }
-    }*/
-
-    /*bool bad_right_side = false;
-    for (int i = 0; i < right.size(); i++) {
-        for (int j = 0; j < right.size(); j++) {
-            if (is_separatres_cross(right[i].second, right[j].second)) {
-                bad_right_side = true;
+    left = find_sep(side_len, center_len, sourse_order, drain_order, neighbors);
+    bool bad_left_side = false;
+    for (int i = 0; i < left.size(); i++) {
+        for (int j = 0; j < left.size(); j++) {
+            if (is_separatres_cross(left[i].second, left[j].second)) {
+                bad_left_side = true;
                 break;
             }
         }
-        if (bad_right_side) {
+        if (bad_left_side) {
             break;
         }
     }
-    if (bad_right_side) {
-        cout << "ALARM";
+    if (bad_left_side) {
         reverse(drain_order.begin(), drain_order.end());
-        vector<pair<int, pair<float, float>>> side(side_len);
-        vector<pair<int, pair<float, float>>> center(center_len);
-        for (int i = 1; i < side_len + 1; i++) {
-            float y = -180 * i / (side_len + 1) + 90;
-            side[i - 1] = (make_pair(sourse_order[i - 1].second, make_pair(0, y)));
-        }
-        for (int i = 1; i < center_len + 1; i++) {
-            float y = -180 * i / (center_len + 1) + 90;
-            center[i - 1] = (make_pair(drain_order[i - 1].second, make_pair(180, y)));
-        }
         vector<pair<char, vector<float>>> left;
-        vector<pair<char, vector<float>>> right;
-        for (int i = 0; i < side.size(); i++) {
-        if (i % 2) {
-            vector<float> coords = {side[i - 1].second.first - side[i].second.first, side[i].second.first, side[i - 1].second.second - side[i].second.second, side[i].second.second, 0, 1};
-            right.push_back(make_pair('s', coords));
-            coords = {side[i + 1].second.first - side[i].second.first, side[i].second.first, side[i + 1].second.second - side[i].second.second, side[i].second.second, 0, 1};
-            right.push_back(make_pair('s', coords));
-            }
-        }
-        for (int i = 0; i < center.size(); i++) {
-            if (i % 2) {
-                vector<float> coords = {center[i - 1].second.first - center[i].second.first, center[i].second.first, center[i - 1].second.second - center[i].second.second, center[i].second.second, 0, 1};
-                right.push_back(make_pair('u', coords));
-                coords = {center[i + 1].second.first - center[i].second.first, center[i].second.first, center[i + 1].second.second - center[i].second.second, center[i].second.second, 0, 1};
-                right.push_back(make_pair('u', coords));
-            }
-        }
-
-        for (int i = 0; i < sourse_order.size(); i++) {
-            if (sourse_order[i].first == 's') {
-                for (int j = 0; j < neighbors[sourse_order[i].second].second.size(); j++) {
-                    if (neighbors[sourse_order[i].second].second[j] == sourse_order[(i - 1 + sourse_order.size()) % sourse_order.size()].second || neighbors[sourse_order[i].second].second[j] == sourse_order[(i + 1 + sourse_order.size()) % sourse_order.size()].second) {
-                        continue;
-                    }
-                    float xi, yi, xj, yj;
-                    for (int k = 0; k < side.size(); k++) {
-                        if (side[k].first == sourse_order[i].second) {
-                            xi = side[k].second.first;
-                            yi = side[k].second.second;
-                            break;
-                        }
-                    }
-                    for (int k = 0; k < center.size(); k++) {
-                        if (center[k].first == neighbors[sourse_order[i].second].second[j]) {
-                            xj = center[k].second.first;
-                            yj = center[k].second.second;
-                            break;
-                        }
-                    }
-                    vector<float> sep = {xj - xi, xi, yj - yi, yi, 0, 1};
-                    bool is_crossing = false;
-                    for (int k = 0; k < left.size(); k++) {
-                        if (is_separatres_cross(sep, left[k].second)) {
-                            is_crossing = true;
-                        }
-                    }
-                    if (is_crossing) {
-                        sep = {xj - (xi + 360), (xi + 360), yj - yi, yi, 0, 1};
-                        right.push_back(make_pair('u', sep));
-                    } else {
-                        left.push_back(make_pair('u', sep));
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < drain_order.size(); i++) {
-            if (drain_order[i].first == 's') {
-                for (int j = 0; j < neighbors[drain_order[i].second].second.size(); j++) {
-                    if (neighbors[drain_order[i].second].second[j] == drain_order[(i - 1 + drain_order.size()) % drain_order.size()].second || neighbors[drain_order[i].second].second[j] == drain_order[(i + 1 + drain_order.size()) % drain_order.size()].second) {
-                        continue;
-                    }
-                    float xi, yi, xj, yj;
-                    for (int k = 0; k < center.size(); k++) {
-                        if (center[k].first == drain_order[i].second) {
-                            xi = center[k].second.first;
-                            yi = center[k].second.second;
-                            break;
-                        }
-                    }
-                    for (int k = 0; k < side.size(); k++) {
-                        if (side[k].first == neighbors[drain_order[i].second].second[j]) {
-                            xj = side[k].second.first;
-                            yj = side[k].second.second;
-                            break;
-                        }
-                    }
-                    vector<float> sep = {xj - xi, xi, yj - yi, yi, 0, 1};
-                    bool is_crossing = false;
-                    for (int k = 0; k < left.size(); k++) {
-                        if (is_separatres_cross(sep, left[k].second)) {
-                            is_crossing = true;
-                        }
-                    }
-                    if (is_crossing) {
-                        sep = {(xj + 360) - xi, xi, yj - yi, yi, 0, 1};
-                        right.push_back(make_pair('s', sep));
-                    } else {
-                        left.push_back(make_pair('s', sep));
-                    }
-                }
-            }
-        }
-    }*/
-    left.insert(left.end(), right.begin(), right.end());
+        left = find_sep(side_len, center_len, sourse_order, drain_order, neighbors);
+    }
     return left;
 }
