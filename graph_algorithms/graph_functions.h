@@ -69,17 +69,24 @@ bool is_3_colored_and_non_oriented(vector<vector<pair<int, char>>>& graph) {
     // 1 edge of each of 3 colors in one verticle
     for (int i = 0; i < graph.size(); i++) {
         // tricolor check
-        bool color_u = 0, color_s = 0, color_t = 0;
+        int color_u = 0, color_s = 0, color_t = 0;
         for (int j = 0; j < graph[i].size(); j++) {
             if (graph[i][j].second == 'u') color_u += 1;
             if (graph[i][j].second == 's') color_s += 1;
             if (graph[i][j].second == 't') color_t += 1;
         }
         // orientedness check
-        bool oriented = 1;
+        int oriented = 1;
         for (int j = 0; j < graph[i].size(); j++) {
-            if (graph[i][j].first != graph[graph[i][j].first][j].first) {
-                oriented == 0;
+            if (i != graph[graph[i][j].first][j].first) {
+                oriented = 0;
+            }
+        }
+        // no cycles with len = 1
+        int has_no_cycles_with_len_1 = 1;
+        for (int j = 0; j < graph[i].size(); j++) {
+            if (i != graph[i][j].first) {
+                has_no_cycles_with_len_1 = 0;
             }
         }
         if (!(color_u == 1 && color_s == 1 && color_t == 1)) {
@@ -88,6 +95,11 @@ bool is_3_colored_and_non_oriented(vector<vector<pair<int, char>>>& graph) {
         }
         if (!(oriented)) {
             // Graph is not oriented
+            return false;
+        }
+
+        if (!(has_no_cycles_with_len_1)) {
+            // Graph has cycles with len = 1
             return false;
         }
     }
@@ -213,6 +225,7 @@ bool is_oriented_surface(vector<vector<pair<int, char>>>& graph) {
             }
             if (!is_in && (way_from_root[i] + way_from_root[graph[i][j].first] + 1) % 2 == 1) {
                 is_even_base = false;
+                cout << "!!!" << i << ":" << way_from_root[i] << " " << graph[i][j].first << ":" << way_from_root[graph[i][j].first] << "!!!";
                 break;
             }
         }
@@ -279,8 +292,10 @@ vector<vector<vector<pair<int, char>>>> graph_generator(int euler_number, int sa
         } else if (i == euler_number) { // First step
             if (2 - euler_number < saddles) {
                 graph[j][0].first = 8 * (2 - euler_number) / 2 + 1;
+                graph[8 * (2 - euler_number) / 2 + 1][0].first = j;
             } else {
                 graph[j][0].first = 8 * (2 - euler_number) / 2 - 1;
+                graph[8 * (2 - euler_number) / 2 - 1][0].first = j;
             }
             graph[j + 1][0].first = (j + 1) + 4;
             graph[j + 2][0].first = (j + 2) + 4;
@@ -386,7 +401,7 @@ vector<pair<char, vector<int>>> find_neighbors(vector<vector<pair<int, char>>>& 
     int omegas = cycles_ut.size();
     int sigmas = cycles_su.size();
     vector<pair<char, vector<int>>> neighbors(0);
-    for (int i = 0; i < cycles.size(); i++) { // O(n^2) cycles
+    for (int i = 0; i < cycles.size(); i++) { // O(n^2)
         vector<int> empty_vector(0);
         neighbors.push_back(make_pair(cycles[i].first, empty_vector));
         char i_cycle_type = cycles[i].first;
@@ -534,6 +549,44 @@ vector<pair<char, vector<float>>> find_sep(int side_len, int center_len, vector<
                         sep = {xi - xj, xj, yi - yj, yj, 0, 1};
                         left.push_back(make_pair('s', sep));
                     }
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < drain_order.size(); i++) {
+        if (drain_order[i].first == 's') {
+            for (int j = 0; j < neighbors[drain_order[i].second].second.size(); j++) {
+                if (neighbors[drain_order[i].second].second[j] == drain_order[(i - 1 + drain_order.size()) % drain_order.size()].second || neighbors[drain_order[i].second].second[j] == drain_order[(i + 1 + drain_order.size()) % drain_order.size()].second) {
+                    continue;
+                }
+                float xi, yi, xj, yj;
+                for (int k = 0; k < center.size(); k++) {
+                    if (center[k].first == drain_order[i].second) {
+                        xi = center[k].second.first;
+                        yi = center[k].second.second;
+                        break;
+                    }
+                }
+                for (int k = 0; k < side.size(); k++) {
+                    if (side[k].first == neighbors[drain_order[i].second].second[j]) {
+                        xj = side[k].second.first;
+                        yj = side[k].second.second;
+                        break;
+                    }
+                }
+                vector<float> sep = {xj - xi, xi, yj - yi, yi, 0, 1};
+                bool is_crossing = false;
+                for (int k = 0; k < left.size(); k++) {
+                    if (is_separatres_cross(sep, left[k].second)) {
+                        is_crossing = true;
+                    }
+                }
+                if (is_crossing) {
+                    sep = {(xj + 360) - xi, xi, yj - yi, yi, 0, 1};
+                    right.push_back(make_pair('s', sep));
+                } else {
+                    left.push_back(make_pair('s', sep));
                 }
             }
         }
