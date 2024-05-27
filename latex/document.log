@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.16)  11 MAY 2024 23:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.16)  27 MAY 2024 16:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -934,7 +934,14 @@ File: l3backend-pdftex.def 2022-08-05 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count318
 \l__pdf_internal_box=\box70
 )
-(./document.aux)
+(./document.aux
+
+LaTeX Warning: Label `overflow' multiply defined.
+
+
+LaTeX Warning: Label `overflow' multiply defined.
+
+)
 \openout1 = `document.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
@@ -954,8 +961,7 @@ LaTeX Font Info:    ... okay on input line 3.
 LaTeX Font Info:    Checking defaults for T2A/cmr/m/n on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
 LaTeX Info: Redefining \th on input line 3.
-
-(c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+ (c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count319
 \scratchdimen=\dimen312
@@ -1143,69 +1149,83 @@ LaTeX Warning: Command \textunderscore invalid in math mode on input line 133.
 LaTeX Warning: Command \textunderscore invalid in math mode on input line 133.
 
 [7]
-<Spheres.png, id=46, 664.6431pt x 417.7206pt>
+<Spheres.png, id=46, 664.6431pt x 391.4625pt>
 File: Spheres.png Graphic file (type png)
 <use Spheres.png>
-Package pdftex.def Info: Spheres.png  used on input line 135.
-(pdftex.def)             Requested size: 512.14963pt x 321.88806pt.
+Package pdftex.def Info: Spheres.png  used on input line 141.
+(pdftex.def)             Requested size: 512.14963pt x 301.65402pt.
+<Torus.png, id=48, 664.6431pt x 316.3017pt>
+File: Torus.png Graphic file (type png)
+<use Torus.png>
+Package pdftex.def Info: Torus.png  used on input line 147.
+(pdftex.def)             Requested size: 512.14963pt x 243.73645pt.
+<Double Torus.png, id=49, 664.6431pt x 240.9pt>
+File: Double Torus.png Graphic file (type png)
+<use Double Torus.png>
+Package pdftex.def Info: Double Torus.png  used on input line 152.
+(pdftex.def)             Requested size: 512.14963pt x 185.63324pt.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 137.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 156.
 
-[8 <./Spheres.png>]
+[8] [9 <./Spheres.png> <./Torus.png>]
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 149.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 168.
 
 
-Overfull \hbox (24.79071pt too wide) in paragraph at lines 145--160
+Overfull \hbox (24.79071pt too wide) in paragraph at lines 164--179
 \T2A/cmr/m/n/12 Графическая часть про-грам-мы, на-пи-сан-ная в фай-ле draw.py, 
 от-ве-ча-ет за ге-не-ра-цию 3D-изображения
  []
 
 
-Overfull \hbox (28.86655pt too wide) in paragraph at lines 145--160
+Overfull \hbox (28.86655pt too wide) in paragraph at lines 164--179
 \T2A/cmr/m/n/12 3) Объ-яв-ля-ет-ся функ-ция $\OML/cmm/m/it/12 construct$\T2A/cm
 r/m/n/12 , ко-то-рая от-ве-ча-ет непо-сред-ствен-но за ге-не-ра-цию 3D-изображе
 ния.
  []
 
-[9]
+[10 <./Double Torus.png>]
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 169.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 188.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 169.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 188.
 
-[10] (./document.aux) ) 
+[11] [12] (./document.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 21409 strings out of 477678
- 403902 string characters out of 5833467
- 770078 words of memory out of 5000000
- 39741 multiletter control sequences out of 15000+600000
+ 21416 strings out of 477678
+ 404043 string characters out of 5833467
+ 770126 words of memory out of 5000000
+ 39746 multiletter control sequences out of 15000+600000
  486052 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,5n,95p,3239b,221s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-
-super-t2a.enc}<c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12
-.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/t
-exlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/202
-2/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2022/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2022/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsy6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.p
-fb><c:/texlive/2022/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb><c:/
-texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/20
-22/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2022/texmf-d
-ist/fonts/type1/public/cm-super/sfbx1728.pfb><c:/texlive/2022/texmf-dist/fonts/
-type1/public/cm-super/sfbx2074.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publ
-ic/cm-super/sfrm1200.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-supe
-r/sfss1200.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1200
-.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on document.pdf (10 pages, 542722 bytes).
+ 99i,7n,95p,3239b,246s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t2a.enc}<c:/tex
+live/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2022
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2022/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2022/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr8.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
+b><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texl
+ive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2022/t
+exmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb><c:/texlive/2022/texmf-di
+st/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2022/texmf-dist/fonts/t
+ype1/public/cm-super/sfbx1440.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publi
+c/cm-super/sfbx1728.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super
+/sfbx2074.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.
+pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb><c:/te
+xlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb><c:/texlive/2022
+/texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
+Output written on document.pdf (12 pages, 890963 bytes).
 PDF statistics:
- 134 PDF objects out of 1000 (max. 8388607)
- 83 compressed objects within 1 object stream
+ 144 PDF objects out of 1000 (max. 8388607)
+ 87 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 28 words of extra memory for PDF output out of 10000 (max. 10000000)
 
