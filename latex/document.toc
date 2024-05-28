@@ -1,0 +1,20 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{\numberline {1}Вступление}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Цели и задачи работы}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Актуальность работы}{3}{}%
+\contentsline {section}{\numberline {2}Теоретическая часть}{4}{}%
+\contentsline {subsection}{\numberline {2.1}Описание}{4}{}%
+\contentsline {subsection}{\numberline {2.2}Введение в теорию графов и построение трёхцветного графа по каскаду}{4}{}%
+\contentsline {section}{\numberline {3}Алгоритмическая часть}{8}{}%
+\contentsline {subsection}{\numberline {3.1}Структура программы}{8}{}%
+\contentsline {subsection}{\numberline {3.2}Проверка введённого трёхцветного графа на корректность}{8}{}%
+\contentsline {subsection}{\numberline {3.3}Проверка поверхности на ориентируемость}{9}{}%
+\contentsline {subsection}{\numberline {3.4}Генератор графов по заданной характеристике Эйлера и числу сёдел}{10}{}%
+\contentsline {subsection}{\numberline {3.5}Поиск соседних неподвижных точек}{11}{}%
+\contentsline {subsection}{\numberline {3.6}Нахождение сепаратрис}{12}{}%
+\contentsline {subsection}{\numberline {3.7}Unit-тестирование}{13}{}%
+\contentsline {section}{\numberline {4}Графическая часть}{14}{}%
+\contentsline {subsection}{\numberline {4.1}Работа с библиотекой Manim}{14}{}%
+\contentsline {subsection}{\numberline {4.2}Запуск и результат работы программы}{14}{}%
+\contentsline {section}{\numberline {5}Ссылка на репозиторий в Github}{15}{}%
+\contentsline {section}{\numberline {6}Список литературы}{15}{}%
