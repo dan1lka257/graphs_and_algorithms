@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.16)  27 MAY 2024 16:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.16)  28 MAY 2024 00:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -941,6 +941,12 @@ LaTeX Warning: Label `overflow' multiply defined.
 
 LaTeX Warning: Label `overflow' multiply defined.
 
+
+LaTeX Warning: Label `overflow' multiply defined.
+
+
+LaTeX Warning: Label `overflow' multiply defined.
+
 )
 \openout1 = `document.aux'.
 
@@ -1083,128 +1089,175 @@ LaTeX Warning: Command \textbackslash invalid in math mode on input line 60.
 
 LaTeX Warning: Command \textbackslash invalid in math mode on input line 63.
 
+<Cells.png, id=26, 301.125pt x 112.9821pt>
+File: Cells.png Graphic file (type png)
+<use Cells.png>
+Package pdftex.def Info: Cells.png  used on input line 66.
+(pdftex.def)             Requested size: 512.14963pt x 192.1963pt.
 
-Overfull \hbox (3.65349pt too wide) in paragraph at lines 56--65
+Overfull \hbox (3.65349pt too wide) in paragraph at lines 56--70
 \T2A/cmr/m/n/12 Рас-смот-рим класс диф-фео-мор-физ-мов на по-верх-но-сти $\OML/
 cmm/m/it/12 M[]$\T2A/cmr/m/n/12 , то-гда диф-фео-мор-физм Морса-Смейла
  []
 
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 [4]
 LaTeX Font Info:    Trying to load font information for U+dsrom on input line 8
-0.
+5.
  (c:/texlive/2022/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
-) [5]
-
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 120.
-
-
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 124.
-
-
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 124.
-
-
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 124.
-
-
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 124.
-
-
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 124.
-
-
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 124.
-
+) [5 <./Cells.png>]
 
 LaTeX Warning: Command \textunderscore invalid in math mode on input line 125.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 127.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 129.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 127.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 129.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 127.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 129.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 127.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 129.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 128.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 129.
 
 
-Overfull \hbox (25.50568pt too wide) in paragraph at lines 120--129
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 129.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 130.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 132.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 132.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 132.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 132.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 133.
+
+
+Overfull \hbox (25.50568pt too wide) in paragraph at lines 125--134
 \T2A/cmr/m/n/12 Функ-ция $\OML/cmm/m/it/12 is[]acceptable$ \T2A/cmr/m/n/12 для 
 про-вер-ки пунк-та 1 вы-зы-ва-ет функ-цию $\OML/cmm/m/it/12 is[]\OT1/cmr/m/n/12
  3[]\OML/cmm/m/it/12 colored[]and[]non[]oriented$\T2A/cmr/m/n/12 ,
  []
 
-[6]
+[6] [7]
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 133.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 138.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 133.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 138.
 
-[7]
-<Spheres.png, id=46, 664.6431pt x 391.4625pt>
+<Spheres.png, id=49, 664.6431pt x 391.4625pt>
 File: Spheres.png Graphic file (type png)
 <use Spheres.png>
-Package pdftex.def Info: Spheres.png  used on input line 141.
+Package pdftex.def Info: Spheres.png  used on input line 146.
 (pdftex.def)             Requested size: 512.14963pt x 301.65402pt.
-<Torus.png, id=48, 664.6431pt x 316.3017pt>
+<Torus.png, id=50, 664.6431pt x 316.3017pt>
 File: Torus.png Graphic file (type png)
 <use Torus.png>
-Package pdftex.def Info: Torus.png  used on input line 147.
+Package pdftex.def Info: Torus.png  used on input line 152.
 (pdftex.def)             Requested size: 512.14963pt x 243.73645pt.
-<Double Torus.png, id=49, 664.6431pt x 240.9pt>
+<Double Torus.png, id=51, 664.6431pt x 240.9pt>
 File: Double Torus.png Graphic file (type png)
 <use Double Torus.png>
-Package pdftex.def Info: Double Torus.png  used on input line 152.
+Package pdftex.def Info: Double Torus.png  used on input line 157.
 (pdftex.def)             Requested size: 512.14963pt x 185.63324pt.
+[8]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 156.
-
-[8] [9 <./Spheres.png> <./Torus.png>]
-
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 168.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (24.79071pt too wide) in paragraph at lines 164--179
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 161.
+
+[9 <./Spheres.png>]
+<Projections.png, id=59, 488.5452pt x 158.7531pt>
+File: Projections.png Graphic file (type png)
+<use Projections.png>
+Package pdftex.def Info: Projections.png  used on input line 167.
+(pdftex.def)             Requested size: 512.14963pt x 166.43646pt.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 170.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 170.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 170.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 170.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 170.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 170.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 171.
+
+
+Overfull \hbox (2.86592pt too wide) in paragraph at lines 164--173
+\T2A/cmr/m/n/12 Для на-хож-де-ния ко-ор-ди-нат се-па-ра-трис на сфе-ре ре-а-ли-
+зо-ва-на функ-ция $\OML/cmm/m/it/12 find[]separatres[]coords$\T2A/cmr/m/n/12 ,
+ []
+
+[10 <./Torus.png> <./Double Torus.png>]
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 181.
+
+
+Overfull \hbox (24.79071pt too wide) in paragraph at lines 177--192
 \T2A/cmr/m/n/12 Графическая часть про-грам-мы, на-пи-сан-ная в фай-ле draw.py, 
 от-ве-ча-ет за ге-не-ра-цию 3D-изображения
  []
 
 
-Overfull \hbox (28.86655pt too wide) in paragraph at lines 164--179
+Overfull \hbox (28.86655pt too wide) in paragraph at lines 177--192
 \T2A/cmr/m/n/12 3) Объ-яв-ля-ет-ся функ-ция $\OML/cmm/m/it/12 construct$\T2A/cm
 r/m/n/12 , ко-то-рая от-ве-ча-ет непо-сред-ствен-но за ге-не-ра-цию 3D-изображе
 ния.
  []
 
-[10 <./Double Torus.png>]
+[11 <./Projections.png>] [12]
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 188.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 202.
 
 
-LaTeX Warning: Command \textunderscore invalid in math mode on input line 188.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 202.
 
-[11] [12] (./document.aux)
+[13] (./document.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 21416 strings out of 477678
- 404043 string characters out of 5833467
- 770126 words of memory out of 5000000
- 39746 multiletter control sequences out of 15000+600000
+ 21430 strings out of 477678
+ 404273 string characters out of 5833467
+ 771125 words of memory out of 5000000
+ 39758 multiletter control sequences out of 15000+600000
  486052 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,7n,95p,3239b,246s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,7n,95p,3239b,250s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t2a.enc}<c:/tex
 live/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2022
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2022/texmf-dis
@@ -1222,10 +1275,10 @@ c/cm-super/sfbx1728.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super
 pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb><c:/te
 xlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb><c:/texlive/2022
 /texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on document.pdf (12 pages, 890963 bytes).
+Output written on document.pdf (13 pages, 998121 bytes).
 PDF statistics:
- 144 PDF objects out of 1000 (max. 8388607)
- 87 compressed objects within 1 object stream
+ 152 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 28 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 38 words of extra memory for PDF output out of 10000 (max. 10000000)
 
